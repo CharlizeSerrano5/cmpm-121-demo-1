@@ -32,5 +32,7 @@ function countIncrease() {
   counter.innerHTML = `${count} calories`;
 }
 
+setInterval(countIncrease, 1000);
+
 app.append(button);
 app.append(counter);
