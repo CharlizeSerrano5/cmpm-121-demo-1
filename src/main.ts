@@ -14,7 +14,7 @@ const counter = document.createElement("div");
 const button = document.createElement("button");
 let count: number = 0;
 button.innerHTML = "🍨";
-counter.innerHTML = `${count} calories`; 
+counter.innerHTML = `${count} calories`;
 
 // button.onclick = () => {
 //   // event occur
@@ -26,10 +26,10 @@ counter.innerHTML = `${count} calories`;
 button.addEventListener("click", countIncrease);
 
 function countIncrease() {
-    console.log("is clicked");
-    count += 1;
-    console.log('count: ', count);
-    counter.innerHTML = `${count} calories`; 
+  console.log("is clicked");
+  count += 1;
+  console.log("count: ", count);
+  counter.innerHTML = `${count} calories`;
 }
 
 app.append(button);
