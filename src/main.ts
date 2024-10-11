@@ -25,29 +25,29 @@ purchase.disabled = true;
 purchase.addEventListener("click", purchaseUpgrade);
 
 function checkPurchase() {
-    if (count >= 10) {
-        purchase.disabled = false;
-    } else {
-        purchase.disabled = true;
-    }
+  if (count >= 10) {
+    purchase.disabled = false;
+  } else {
+    purchase.disabled = true;
+  }
 }
 
 function updateCounter() {
-    counter.innerHTML = `${count} calories`;
-    checkPurchase();
+  counter.innerHTML = `${count} calories`;
+  checkPurchase();
 }
 
 // on click purchase will deduct
 function countIncrease() {
-      count += increase;
-    updateCounter();
+  count += increase;
+  updateCounter();
 }
 
 function purchaseUpgrade() {
-    count -= 10;
-    increase += 1;
-    updateCounter();
-  }
+  count -= 10;
+  increase += 1;
+  updateCounter();
+}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
 // I took reference from requestAnimationFrame() for the elapse function.
