@@ -12,25 +12,43 @@ app.append(header);
 // create a button
 const counter = document.createElement("div");
 const button = document.createElement("button");
+const purchase = document.createElement("button");
+
 let count: number = 0;
+let increase: number = 1;
 button.innerHTML = "🍨";
 counter.innerHTML = `${count} calories`;
-
-// button.onclick = () => {
-//   // event occur
-//   console.log("is clicked");
-//   count += 1;
-//   console.log('count: ', count);
-// };
-
 button.addEventListener("click", countIncrease);
 
-function countIncrease() {
-  console.log("is clicked");
-  count += 1;
-  console.log("count: ", count);
-  counter.innerHTML = `${count} calories`;
+purchase.innerHTML = "PURCHASE";
+purchase.disabled = true;
+purchase.addEventListener("click", purchaseUpgrade);
+
+function checkPurchase() {
+    if (count >= 10) {
+        purchase.disabled = false;
+    } else {
+        purchase.disabled = true;
+    }
 }
+
+function updateCounter() {
+    counter.innerHTML = `${count} calories`;
+    checkPurchase();
+}
+
+// on click purchase will deduct
+function countIncrease() {
+      count += increase;
+    updateCounter();
+}
+
+function purchaseUpgrade() {
+    count -= 10;
+    increase += 1;
+    updateCounter();
+  }
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
 // I took reference from requestAnimationFrame() for the elapse function.
 // The example function I used was function animate() where they used performance.now()
@@ -38,7 +56,6 @@ function countIncrease() {
 // when it passes then the count increases
 const zero = performance.now();
 let compare = 0;
-// let temp = 0;
 requestAnimationFrame(elapse);
 function elapse(timestamp: number) {
   const value = (timestamp - zero) / 1000;
@@ -59,3 +76,4 @@ function elapse(timestamp: number) {
 
 app.append(button);
 app.append(counter);
+app.append(purchase);
