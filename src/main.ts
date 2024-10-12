@@ -44,16 +44,15 @@ function countIncrease() {
 }
 
 function clickIncrease() {
-    count += 1;
-    updateCounter();
-  }
+  count += 1;
+  updateCounter();
+}
 
 function purchaseUpgrade() {
   count -= 10;
   increase += 1;
   updateCounter();
   requestAnimationFrame(elapse);
-
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
