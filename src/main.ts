@@ -15,10 +15,10 @@ const button = document.createElement("button");
 const purchase = document.createElement("button");
 
 let count: number = 0;
-let increase: number = 1;
+let increase: number = 0;
 button.innerHTML = "🍨";
 counter.innerHTML = `${count} calories`;
-button.addEventListener("click", countIncrease);
+button.addEventListener("click", clickIncrease);
 
 purchase.innerHTML = "PURCHASE";
 purchase.disabled = true;
@@ -43,10 +43,17 @@ function countIncrease() {
   updateCounter();
 }
 
+function clickIncrease() {
+    count += 1;
+    updateCounter();
+  }
+
 function purchaseUpgrade() {
   count -= 10;
   increase += 1;
   updateCounter();
+  requestAnimationFrame(elapse);
+
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
@@ -56,7 +63,6 @@ function purchaseUpgrade() {
 // when it passes then the count increases
 const zero = performance.now();
 let compare = 0;
-requestAnimationFrame(elapse);
 function elapse(timestamp: number) {
   const value = (timestamp - zero) / 1000;
   // the moment the value turns into the next value 1->2
