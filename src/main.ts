@@ -79,9 +79,20 @@ const availableItems: Item[] = [
   new Item("Vanilla", 10, 0.1, 0, "Pure, plain, simple vanilla."),
   new Item("Strawberry", 100, 2.0, 0, "A little bit more refreshing flavor."),
   new Item("Banana", 250, 15, 0, "Makes the monkeys go faster."),
-  new Item("Chocolate", 1000, 50, 0, "A classic, probably don't give to the monkeys."),
-  new Item("Coffee", 2500, 200, 0, "Bout to go fast with this flavor town delight."),
-
+  new Item(
+    "Chocolate",
+    1000,
+    50,
+    0,
+    "A classic, probably don't give to the monkeys.",
+  ),
+  new Item(
+    "Coffee",
+    2500,
+    200,
+    0,
+    "Bout to go fast with this flavor town delight.",
+  ),
 ];
 
 let count: number = 0;
