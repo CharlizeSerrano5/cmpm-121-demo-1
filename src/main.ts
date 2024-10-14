@@ -31,7 +31,7 @@ class Item {
     this.amount = amount; // amount will be called
     this.button = button;
     this.display = display;
-    console.log('start cost: ', this.cost)
+    console.log("start cost: ", this.cost);
   }
   increaseAmount() {
     // increase the amount purchased of this item
@@ -45,12 +45,12 @@ class Item {
 
     this.cost = this.cost * 1.15;
     this.updateButton();
-    console.log('cost: ', this.cost);
+    console.log("cost: ", this.cost);
   }
 
   updateButton() {
     const costNum = this.cost.toFixed(2);
-    this.button.innerHTML = `PURCHASE -${costNum}`
+    this.button.innerHTML = `PURCHASE -${costNum}`;
   }
 
   purchaseUpgrade() {
