@@ -50,7 +50,7 @@ class Item {
     const costNum = this.cost.toFixed(2);
     this.button.innerHTML = `Purchase ${this.name} for ${costNum}`;
   }
-  
+
   purchaseUpgrade() {
     count -= this.cost;
     increase += this.rate; // issue with decimals
@@ -79,7 +79,6 @@ const growthDisplay = document.createElement("div");
 const chocolate = new Item("Vanilla", 10, 0.1, 0, vanillaButton, vanillaAmt);
 const strawberry = new Item("Strawberry", 100, 2.0, 0, berryButton, berryAmt);
 const vanilla = new Item("Chocolate", 1000, 50, 0, chocoButton, chocoAmt);
-
 
 let count: number = 0;
 let increase: number = 0;
