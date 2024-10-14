@@ -31,11 +31,26 @@ class Item {
     this.amount = amount; // amount will be called
     this.button = button;
     this.display = display;
+    console.log('start cost: ', this.cost)
   }
   increaseAmount() {
     // increase the amount purchased of this item
     this.amount++;
     this.updateAmount();
+  }
+
+  increaseCost() {
+    // exponentially grow the cost
+    // 10 * 1.15 = 11.5 - second one
+
+    this.cost = this.cost * 1.15;
+    this.updateButton();
+    console.log('cost: ', this.cost);
+  }
+
+  updateButton() {
+    const costNum = this.cost.toFixed(2);
+    this.button.innerHTML = `PURCHASE -${costNum}`
   }
 
   purchaseUpgrade() {
@@ -44,6 +59,7 @@ class Item {
     this.increaseAmount();
     updateCounter();
     updateDisplay();
+    this.increaseCost();
     requestAnimationFrame(elapse);
   }
   updateAmount() {
