@@ -10,42 +10,47 @@ header.innerHTML = gameName;
 app.append(header);
 
 class Item {
-    name: string;
-    cost: number;
-    rate: number;
-    amount: number;
-    button: HTMLElement;
-    display: HTMLElement;
-    
-    constructor(name: string, cost: number, rate: number, amount: number, button: HTMLElement, display: HTMLElement) {
-        this.name = name;
-        this.cost = cost;
-        this.rate = rate;
-        this.amount = amount; // amount will be called
-        this.button = button;
-        this.display = display;
-    }
-    increaseAmount() {
-        // increase the amount purchased of this item
-        this.amount++;
-        this.updateAmount();
-    }
+  name: string;
+  cost: number;
+  rate: number;
+  amount: number;
+  button: HTMLElement;
+  display: HTMLElement;
 
-    purchaseUpgrade() {
-        count -= this.cost;
-        increase += this.rate; // issue with decimals
-        this.increaseAmount();
-        updateCounter();
-        updateDisplay();
-        requestAnimationFrame(elapse);
-    }
-    updateAmount() {
-        console.log('thisdisplay: ', this.display)
-        this.display.innerHTML =  `${this.amount} ${this.name} has been purchased.`;
-    }
-
+  constructor(
+    name: string,
+    cost: number,
+    rate: number,
+    amount: number,
+    button: HTMLElement,
+    display: HTMLElement,
+  ) {
+    this.name = name;
+    this.cost = cost;
+    this.rate = rate;
+    this.amount = amount; // amount will be called
+    this.button = button;
+    this.display = display;
+  }
+  increaseAmount() {
+    // increase the amount purchased of this item
+    this.amount++;
+    this.updateAmount();
   }
 
+  purchaseUpgrade() {
+    count -= this.cost;
+    increase += this.rate; // issue with decimals
+    this.increaseAmount();
+    updateCounter();
+    updateDisplay();
+    requestAnimationFrame(elapse);
+  }
+  updateAmount() {
+    console.log("thisdisplay: ", this.display);
+    this.display.innerHTML = `${this.amount} ${this.name} has been purchased.`;
+  }
+}
 
 // create a button
 const counter = document.createElement("div");
@@ -58,9 +63,9 @@ const amountB = document.createElement("div");
 const amountC = document.createElement("div");
 const growthDisplay = document.createElement("div");
 
-const chocolate = new Item('Chocolate', 10, 0.1, 0, purchaseA, amountA);
-const strawberry = new Item('Strawberry', 100, 2.0, 0, purchaseB, amountB);
-const vanilla = new Item('Vanilla', 1000, 50, 0, purchaseC, amountC);
+const chocolate = new Item("Chocolate", 10, 0.1, 0, purchaseA, amountA);
+const strawberry = new Item("Strawberry", 100, 2.0, 0, purchaseB, amountB);
+const vanilla = new Item("Vanilla", 1000, 50, 0, purchaseC, amountC);
 
 let count: number = 0;
 let increase: number = 0;
@@ -70,16 +75,23 @@ button.addEventListener("click", clickIncrease);
 
 purchaseA.innerHTML = "PURCHASE -10";
 purchaseA.disabled = true;
-purchaseA.addEventListener("click", () => {chocolate.purchaseUpgrade()});
+purchaseA.addEventListener("click", () => {
+  chocolate.purchaseUpgrade();
+});
 
 purchaseB.innerHTML = "PURCHASE -100";
 purchaseB.disabled = true;
-purchaseB.addEventListener("click", () => {strawberry.purchaseUpgrade()});
+purchaseB.addEventListener("click", () => {
+  strawberry.purchaseUpgrade();
+});
 
 purchaseC.innerHTML = "PURCHASE";
 purchaseC.disabled = true;
-purchaseC.addEventListener("click", () => {vanilla.purchaseUpgrade()});
-function checkPurchase() { // should be refactored
+purchaseC.addEventListener("click", () => {
+  vanilla.purchaseUpgrade();
+});
+function checkPurchase() {
+  // should be refactored
   if (count >= 10) {
     purchaseA.disabled = false;
   } else {
@@ -98,14 +110,14 @@ function checkPurchase() { // should be refactored
 }
 
 function updateDisplay() {
-    let increaseNum = increase.toFixed(1);
+  const increaseNum = increase.toFixed(1);
 
-    growthDisplay.innerHTML = `Growth Rate: ${increaseNum} calories/sec`;
-    checkPurchase();
-  }
+  growthDisplay.innerHTML = `Growth Rate: ${increaseNum} calories/sec`;
+  checkPurchase();
+}
 
 function updateCounter() {
-    let countNum = count.toFixed(1);
+  const countNum = count.toFixed(1);
   counter.innerHTML = `${countNum} calories`;
   checkPurchase();
 }
@@ -155,4 +167,3 @@ app.append(purchaseC);
 app.append(amountA);
 app.append(amountB);
 app.append(amountC);
-
