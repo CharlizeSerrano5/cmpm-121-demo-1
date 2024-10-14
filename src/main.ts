@@ -16,12 +16,15 @@ class Item {
   amount: number;
   button: HTMLButtonElement;
   display: HTMLElement;
+  content: HTMLElement;
+  desc: string;
 
   constructor(
     name: string,
     cost: number,
     rate: number,
     amount: number,
+    desc: string,
     // button: HTMLButtonElement,
     // display: HTMLElement,
   ) {
@@ -31,6 +34,9 @@ class Item {
     this.amount = amount; // amount will be called
     this.button = document.createElement("button");
     this.display = document.createElement("div");
+    this.content = document.createElement("div");
+    this.desc = desc;
+    this.content.innerHTML = this.desc;
   }
   increaseAmount() {
     // increase the amount purchased of this item
@@ -70,9 +76,12 @@ const button = document.createElement("button");
 const growthDisplay = document.createElement("div");
 
 const availableItems: Item[] = [
-  new Item("Vanilla", 10, 0.1, 0),
-  new Item("Strawberry", 100, 2.0, 0),
-  new Item("Chocolate", 1000, 50, 0),
+  new Item("Vanilla", 10, 0.1, 0, "Pure, plain, simple vanilla."),
+  new Item("Strawberry", 100, 2.0, 0, "A little bit more refreshing flavor."),
+  new Item("Banana", 250, 15, 0, "Makes the monkeys go faster."),
+  new Item("Chocolate", 1000, 50, 0, "A classic, probably don't give to the monkeys."),
+  new Item("Coffee", 2500, 200, 0, "Bout to go fast with this flavor town delight."),
+
 ];
 
 let count: number = 0;
@@ -154,7 +163,6 @@ app.append(button);
 app.append(counter);
 for (const item of availableItems) {
   app.append(item.button);
-}
-for (const item of availableItems) {
+  app.append(item.desc);
   app.append(item.display);
 }
