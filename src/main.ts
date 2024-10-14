@@ -31,7 +31,6 @@ class Item {
     this.amount = amount; // amount will be called
     this.button = button;
     this.display = display;
-    console.log("start cost: ", this.cost);
   }
   increaseAmount() {
     // increase the amount purchased of this item
@@ -45,14 +44,13 @@ class Item {
 
     this.cost = this.cost * 1.15;
     this.updateButton();
-    console.log("cost: ", this.cost);
   }
 
   updateButton() {
     const costNum = this.cost.toFixed(2);
-    this.button.innerHTML = `PURCHASE -${costNum}`;
+    this.button.innerHTML = `Purchase ${this.name} for ${costNum}`;
   }
-
+  
   purchaseUpgrade() {
     count -= this.cost;
     increase += this.rate; // issue with decimals
@@ -63,78 +61,74 @@ class Item {
     requestAnimationFrame(elapse);
   }
   updateAmount() {
-    console.log("thisdisplay: ", this.display);
-    this.display.innerHTML = `${this.amount} ${this.name} has been purchased.`;
+    this.display.innerHTML = `${this.amount} Gallons of ${this.name} Milk has been purchased.`;
   }
 }
 
 // create a button
 const counter = document.createElement("div");
 const button = document.createElement("button");
-const purchaseA = document.createElement("button");
-const purchaseB = document.createElement("button");
-const purchaseC = document.createElement("button");
-const amountA = document.createElement("div");
-const amountB = document.createElement("div");
-const amountC = document.createElement("div");
+const vanillaButton = document.createElement("button");
+const berryButton = document.createElement("button");
+const chocoButton = document.createElement("button");
+const vanillaAmt = document.createElement("div");
+const berryAmt = document.createElement("div");
+const chocoAmt = document.createElement("div");
 const growthDisplay = document.createElement("div");
 
-const chocolate = new Item("Chocolate", 10, 0.1, 0, purchaseA, amountA);
-const strawberry = new Item("Strawberry", 100, 2.0, 0, purchaseB, amountB);
-const vanilla = new Item("Vanilla", 1000, 50, 0, purchaseC, amountC);
+const chocolate = new Item("Vanilla", 10, 0.1, 0, vanillaButton, vanillaAmt);
+const strawberry = new Item("Strawberry", 100, 2.0, 0, berryButton, berryAmt);
+const vanilla = new Item("Chocolate", 1000, 50, 0, chocoButton, chocoAmt);
+
 
 let count: number = 0;
 let increase: number = 0;
 button.innerHTML = "🍨";
-counter.innerHTML = `${count} calories`;
 button.addEventListener("click", clickIncrease);
 
-purchaseA.innerHTML = "PURCHASE -10";
-purchaseA.disabled = true;
-purchaseA.addEventListener("click", () => {
+vanillaButton.disabled = true;
+vanillaButton.addEventListener("click", () => {
   chocolate.purchaseUpgrade();
 });
 
-purchaseB.innerHTML = "PURCHASE -100";
-purchaseB.disabled = true;
-purchaseB.addEventListener("click", () => {
+berryButton.disabled = true;
+berryButton.addEventListener("click", () => {
   strawberry.purchaseUpgrade();
 });
 
-purchaseC.innerHTML = "PURCHASE";
-purchaseC.disabled = true;
-purchaseC.addEventListener("click", () => {
+chocoButton.disabled = true;
+chocoButton.addEventListener("click", () => {
   vanilla.purchaseUpgrade();
 });
 function checkPurchase() {
   // should be refactored
   if (count >= 10) {
-    purchaseA.disabled = false;
+    vanillaButton.disabled = false;
   } else {
-    purchaseA.disabled = true;
+    vanillaButton.disabled = true;
   }
   if (count >= 100) {
-    purchaseB.disabled = false;
+    berryButton.disabled = false;
   } else {
-    purchaseB.disabled = true;
+    berryButton.disabled = true;
   }
   if (count >= 1000) {
-    purchaseC.disabled = false;
+    chocoButton.disabled = false;
   } else {
-    purchaseC.disabled = true;
+    chocoButton.disabled = true;
   }
 }
 
 function updateDisplay() {
   const increaseNum = increase.toFixed(1);
 
-  growthDisplay.innerHTML = `Growth Rate: ${increaseNum} calories/sec`;
+  growthDisplay.innerHTML = `Freeze Rate: ${increaseNum} tea spoons of ice cream cooled per second`;
   checkPurchase();
 }
 
 function updateCounter() {
   const countNum = count.toFixed(1);
-  counter.innerHTML = `${countNum} calories`;
+  counter.innerHTML = `${countNum} tea spoons`;
   checkPurchase();
 }
 
@@ -173,13 +167,17 @@ function elapse(timestamp: number) {
   }
 }
 
+chocolate.updateButton();
+strawberry.updateButton();
+vanilla.updateButton();
+updateDisplay();
 app.append(growthDisplay);
 app.append(button);
 app.append(counter);
-app.append(purchaseA);
-app.append(purchaseB);
-app.append(purchaseC);
+app.append(vanillaButton);
+app.append(berryButton);
+app.append(chocoButton);
 
-app.append(amountA);
-app.append(amountB);
-app.append(amountC);
+app.append(vanillaAmt);
+app.append(berryAmt);
+app.append(chocoAmt);
