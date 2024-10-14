@@ -14,7 +14,7 @@ class Item {
   cost: number;
   rate: number;
   amount: number;
-  button: HTMLElement;
+  button: HTMLButtonElement;
   display: HTMLElement;
 
   constructor(
@@ -22,15 +22,15 @@ class Item {
     cost: number,
     rate: number,
     amount: number,
-    button: HTMLElement,
-    display: HTMLElement,
+    // button: HTMLButtonElement,
+    // display: HTMLElement,
   ) {
     this.name = name;
     this.cost = cost;
     this.rate = rate;
     this.amount = amount; // amount will be called
-    this.button = button;
-    this.display = display;
+    this.button = document.createElement("button");
+    this.display = document.createElement("div");
   }
   increaseAmount() {
     // increase the amount purchased of this item
@@ -41,7 +41,6 @@ class Item {
   increaseCost() {
     // exponentially grow the cost
     // 10 * 1.15 = 11.5 - second one
-
     this.cost = this.cost * 1.15;
     this.updateButton();
   }
@@ -68,61 +67,40 @@ class Item {
 // create a button
 const counter = document.createElement("div");
 const button = document.createElement("button");
-const vanillaButton = document.createElement("button");
-const berryButton = document.createElement("button");
-const chocoButton = document.createElement("button");
-const vanillaAmt = document.createElement("div");
-const berryAmt = document.createElement("div");
-const chocoAmt = document.createElement("div");
 const growthDisplay = document.createElement("div");
 
-const chocolate = new Item("Vanilla", 10, 0.1, 0, vanillaButton, vanillaAmt);
-const strawberry = new Item("Strawberry", 100, 2.0, 0, berryButton, berryAmt);
-const vanilla = new Item("Chocolate", 1000, 50, 0, chocoButton, chocoAmt);
+const availableItems : Item[] = [
+    new Item("Vanilla", 10, 0.1, 0),
+    new Item("Strawberry", 100, 2.0, 0),
+    new Item("Chocolate", 1000, 50, 0),
+]
 
 let count: number = 0;
 let increase: number = 0;
 button.innerHTML = "🍨";
 button.addEventListener("click", clickIncrease);
 
-vanillaButton.disabled = true;
-vanillaButton.addEventListener("click", () => {
-  chocolate.purchaseUpgrade();
-});
+availableItems.map((item) => {
+    console.log(item);
+    item.button.disabled = true;
+    item.button.addEventListener("click", () => {
+        item.purchaseUpgrade();
+    })
+})
 
-berryButton.disabled = true;
-berryButton.addEventListener("click", () => {
-  strawberry.purchaseUpgrade();
-});
-
-chocoButton.disabled = true;
-chocoButton.addEventListener("click", () => {
-  vanilla.purchaseUpgrade();
-});
 function checkPurchase() {
-  // should be refactored
-  if (count >= 10) {
-    vanillaButton.disabled = false;
-  } else {
-    vanillaButton.disabled = true;
-  }
-  if (count >= 100) {
-    berryButton.disabled = false;
-  } else {
-    berryButton.disabled = true;
-  }
-  if (count >= 1000) {
-    chocoButton.disabled = false;
-  } else {
-    chocoButton.disabled = true;
-  }
+    for (var item of availableItems) {
+        if (count >= item.cost) {
+            item.button.disabled = false;
+        } else {
+            item.button.disabled = true;
+        }
+    }
 }
 
 function updateDisplay() {
   const increaseNum = increase.toFixed(1);
-
   growthDisplay.innerHTML = `Freeze Rate: ${increaseNum} tea spoons of ice cream cooled per second`;
-  checkPurchase();
 }
 
 function updateCounter() {
@@ -166,17 +144,17 @@ function elapse(timestamp: number) {
   }
 }
 
-chocolate.updateButton();
-strawberry.updateButton();
-vanilla.updateButton();
+// -- Initialization
+for (var item of availableItems) {
+    item.updateButton();
+}
 updateDisplay();
 app.append(growthDisplay);
 app.append(button);
 app.append(counter);
-app.append(vanillaButton);
-app.append(berryButton);
-app.append(chocoButton);
-
-app.append(vanillaAmt);
-app.append(berryAmt);
-app.append(chocoAmt);
+for (var item of availableItems) {
+    app.append(item.button);
+}
+for (var item of availableItems) {
+    app.append(item.display)
+}
