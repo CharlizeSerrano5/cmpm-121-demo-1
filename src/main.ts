@@ -101,7 +101,6 @@ button.innerHTML = "🍨";
 button.addEventListener("click", clickIncrease);
 
 availableItems.map((item) => {
-  console.log(item);
   item.button.disabled = true;
   item.button.addEventListener("click", () => {
     item.purchaseUpgrade();
