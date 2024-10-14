@@ -69,11 +69,11 @@ const counter = document.createElement("div");
 const button = document.createElement("button");
 const growthDisplay = document.createElement("div");
 
-const availableItems : Item[] = [
-    new Item("Vanilla", 10, 0.1, 0),
-    new Item("Strawberry", 100, 2.0, 0),
-    new Item("Chocolate", 1000, 50, 0),
-]
+const availableItems: Item[] = [
+  new Item("Vanilla", 10, 0.1, 0),
+  new Item("Strawberry", 100, 2.0, 0),
+  new Item("Chocolate", 1000, 50, 0),
+];
 
 let count: number = 0;
 let increase: number = 0;
@@ -81,21 +81,21 @@ button.innerHTML = "🍨";
 button.addEventListener("click", clickIncrease);
 
 availableItems.map((item) => {
-    console.log(item);
-    item.button.disabled = true;
-    item.button.addEventListener("click", () => {
-        item.purchaseUpgrade();
-    })
-})
+  console.log(item);
+  item.button.disabled = true;
+  item.button.addEventListener("click", () => {
+    item.purchaseUpgrade();
+  });
+});
 
 function checkPurchase() {
-    for (var item of availableItems) {
-        if (count >= item.cost) {
-            item.button.disabled = false;
-        } else {
-            item.button.disabled = true;
-        }
+  for (const item of availableItems) {
+    if (count >= item.cost) {
+      item.button.disabled = false;
+    } else {
+      item.button.disabled = true;
     }
+  }
 }
 
 function updateDisplay() {
@@ -145,16 +145,16 @@ function elapse(timestamp: number) {
 }
 
 // -- Initialization
-for (var item of availableItems) {
-    item.updateButton();
+for (const item of availableItems) {
+  item.updateButton();
 }
 updateDisplay();
 app.append(growthDisplay);
 app.append(button);
 app.append(counter);
-for (var item of availableItems) {
-    app.append(item.button);
+for (const item of availableItems) {
+  app.append(item.button);
 }
-for (var item of availableItems) {
-    app.append(item.display)
+for (const item of availableItems) {
+  app.append(item.display);
 }
