@@ -2,17 +2,65 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "My in-progress game to submit!";
+const gameName = "Ice Cream Shop!";
 document.title = gameName;
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
+class Item {
+    name: string;
+    cost: number;
+    rate: number;
+    amount: number;
+    button: HTMLElement;
+    display: HTMLElement;
+    
+    constructor(name: string, cost: number, rate: number, amount: number, button: HTMLElement, display: HTMLElement) {
+        this.name = name;
+        this.cost = cost;
+        this.rate = rate;
+        this.amount = amount; // amount will be called
+        this.button = button;
+        this.display = display;
+    }
+    increaseAmount() {
+        // increase the amount purchased of this item
+        this.amount++;
+        this.updateAmount();
+    }
+
+    purchaseUpgrade() {
+        count -= this.cost;
+        increase += this.rate; // issue with decimals
+        this.increaseAmount();
+        updateCounter();
+        updateDisplay();
+        requestAnimationFrame(elapse);
+    }
+    updateAmount() {
+        console.log('thisdisplay: ', this.display)
+        this.display.innerHTML =  `${this.amount} ${this.name} has been purchased.`;
+    }
+
+  }
+
+
 // create a button
 const counter = document.createElement("div");
 const button = document.createElement("button");
-const purchase = document.createElement("button");
+const purchaseA = document.createElement("button");
+const purchaseB = document.createElement("button");
+const purchaseC = document.createElement("button");
+const amountA = document.createElement("div");
+const amountB = document.createElement("div");
+const amountC = document.createElement("div");
+const growthDisplay = document.createElement("div");
+
+const chocolate = new Item('Chocolate', 10, 0.1, 0, purchaseA, amountA);
+const strawberry = new Item('Strawberry', 100, 2.0, 0, purchaseB, amountB);
+const vanilla = new Item('Vanilla', 1000, 50, 0, purchaseC, amountC);
 
 let count: number = 0;
 let increase: number = 0;
@@ -20,20 +68,45 @@ button.innerHTML = "🍨";
 counter.innerHTML = `${count} calories`;
 button.addEventListener("click", clickIncrease);
 
-purchase.innerHTML = "PURCHASE";
-purchase.disabled = true;
-purchase.addEventListener("click", purchaseUpgrade);
+purchaseA.innerHTML = "PURCHASE -10";
+purchaseA.disabled = true;
+purchaseA.addEventListener("click", () => {chocolate.purchaseUpgrade()});
 
-function checkPurchase() {
+purchaseB.innerHTML = "PURCHASE -100";
+purchaseB.disabled = true;
+purchaseB.addEventListener("click", () => {strawberry.purchaseUpgrade()});
+
+purchaseC.innerHTML = "PURCHASE";
+purchaseC.disabled = true;
+purchaseC.addEventListener("click", () => {vanilla.purchaseUpgrade()});
+function checkPurchase() { // should be refactored
   if (count >= 10) {
-    purchase.disabled = false;
+    purchaseA.disabled = false;
   } else {
-    purchase.disabled = true;
+    purchaseA.disabled = true;
+  }
+  if (count >= 100) {
+    purchaseB.disabled = false;
+  } else {
+    purchaseB.disabled = true;
+  }
+  if (count >= 1000) {
+    purchaseC.disabled = false;
+  } else {
+    purchaseC.disabled = true;
   }
 }
 
+function updateDisplay() {
+    let increaseNum = increase.toFixed(1);
+
+    growthDisplay.innerHTML = `Growth Rate: ${increaseNum} calories/sec`;
+    checkPurchase();
+  }
+
 function updateCounter() {
-  counter.innerHTML = `${count} calories`;
+    let countNum = count.toFixed(1);
+  counter.innerHTML = `${countNum} calories`;
   checkPurchase();
 }
 
@@ -46,13 +119,6 @@ function countIncrease() {
 function clickIncrease() {
   count += 1;
   updateCounter();
-}
-
-function purchaseUpgrade() {
-  count -= 10;
-  increase += 1;
-  updateCounter();
-  requestAnimationFrame(elapse);
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
@@ -79,6 +145,14 @@ function elapse(timestamp: number) {
   }
 }
 
+app.append(growthDisplay);
 app.append(button);
 app.append(counter);
-app.append(purchase);
+app.append(purchaseA);
+app.append(purchaseB);
+app.append(purchaseC);
+
+app.append(amountA);
+app.append(amountB);
+app.append(amountC);
+
