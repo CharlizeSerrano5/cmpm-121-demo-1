@@ -42,8 +42,6 @@ class Item {
   purchaseUpgrade() {
     this.updateRate();
     this.updateItem();
-    updateCounter();
-    updateDisplay();
     requestAnimationFrame(elapse);
   }
 
@@ -119,6 +117,8 @@ availableItems.map((item) => {
   app.append(display);
   button.addEventListener("click", () => {
     item.purchaseUpgrade();
+    updateCounter();
+    updateDisplay();
     updateItemDisplay(item, button, display);
   });
 });
@@ -131,7 +131,6 @@ function updateItemDisplay(
   const costNum = item.cost.toFixed(2);
   button.innerHTML = `Purchase ${item.name} for ${costNum}`;
   display.innerHTML = `${item.amount} Gallons of ${item.name} Milk has been purchased.`;
-  checkPurchase(item, button);
 }
 
 function checkAllPurchases(items: Item[], buttons: HTMLButtonElement[]) {
