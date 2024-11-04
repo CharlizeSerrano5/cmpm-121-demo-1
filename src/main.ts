@@ -46,7 +46,6 @@ class Item {
 
   increaseCost() {
     // exponentially grow the cost
-    // 10 * 1.15 = 11.5 - second one
     this.cost = this.cost * 1.15;
     this.updateButton();
   }
@@ -57,16 +56,24 @@ class Item {
   }
 
   purchaseUpgrade() {
-    count -= this.cost;
-    increase += this.rate; // issue with decimals
-    this.increaseAmount();
+    this.updateRate();
+    this.updateItem();
     updateCounter();
     updateDisplay();
-    this.increaseCost();
     requestAnimationFrame(elapse);
   }
   updateAmount() {
     this.display.innerHTML = `${this.amount} Gallons of ${this.name} Milk has been purchased.`;
+  }
+  updateItem() {
+    // increase cost + amount existing of item
+    this.increaseAmount();
+    this.increaseCost();
+  }
+  updateRate() {
+    // deduct from counter and increase the amt of everything
+    totalCount -= this.cost;
+    totalIncrease += this.rate;
   }
 }
 
@@ -95,8 +102,8 @@ const availableItems: Item[] = [
   ),
 ];
 
-let count: number = 0;
-let increase: number = 0;
+let totalCount: number = 0;
+let totalIncrease: number = 0;
 button.innerHTML = "🍨";
 button.addEventListener("click", clickIncrease);
 
@@ -109,7 +116,7 @@ availableItems.map((item) => {
 
 function checkPurchase() {
   for (const item of availableItems) {
-    if (count >= item.cost) {
+    if (totalCount >= item.cost) {
       item.button.disabled = false;
     } else {
       item.button.disabled = true;
@@ -118,24 +125,24 @@ function checkPurchase() {
 }
 
 function updateDisplay() {
-  const increaseNum = increase.toFixed(1);
+  const increaseNum = totalIncrease.toFixed(1);
   growthDisplay.innerHTML = `Freeze Rate: ${increaseNum} tea spoons of ice cream cooled per second`;
 }
 
 function updateCounter() {
-  const countNum = count.toFixed(1);
+  const countNum = totalCount.toFixed(1);
   counter.innerHTML = `${countNum} tea spoons`;
   checkPurchase();
 }
 
 // on click purchase will deduct
 function countIncrease() {
-  count += increase;
+  totalCount += totalIncrease;
   updateCounter();
 }
 
 function clickIncrease() {
-  count += 1;
+  totalCount += 1;
   updateCounter();
 }
 
@@ -145,25 +152,21 @@ function clickIncrease() {
 // Now I am checking if the value has reached 1 to indicate 1000 ms has passed.
 // when it passes then the count increases
 const zero = performance.now();
-let compare = 0;
+let currentTime = 0;
 function elapse(timestamp: number) {
-  const value = (timestamp - zero) / 1000;
-  // the moment the value turns into the next value 1->2
-  const check = value - (value % 1);
-  // check becomes a number without a remainder
-  if (check > compare) {
-    // when the value is greater than the original compare value
-    // set compare and then increase the count
-    compare = check;
+  const decimalValue = (timestamp - zero) / 1000;
+  const elapsedSeconds = decimalValue - (decimalValue % 1);
+  increasePerSecond(elapsedSeconds);
+  requestAnimationFrame((t) => elapse(t));
+}
+
+function increasePerSecond(newTime: number) {
+  if (newTime > currentTime) {
+    currentTime = newTime;
     countIncrease();
-    requestAnimationFrame((t) => elapse(t));
-    // recall the function and wait till check finally becomes a new value
-  } else {
-    requestAnimationFrame((t) => elapse(t));
   }
 }
 
-// -- Initialization
 for (const item of availableItems) {
   item.updateButton();
 }
