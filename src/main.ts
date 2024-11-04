@@ -71,8 +71,20 @@ const availableItems: Item[] = [
   new Item("Vanilla", 10, 0.1, 0, "Pure, plain, simple vanilla."),
   new Item("Strawberry", 100, 2.0, 0, "A little bit more refreshing flavor."),
   new Item("Banana", 250, 15, 0, "Makes the monkeys go faster."),
-  new Item("Chocolate",1000,50,0,"A classic, probably don't give to the monkeys.",),
-  new Item("Coffee",2500, 200, 0, "Bout to go fast with this flavor town delight.",),
+  new Item(
+    "Chocolate",
+    1000,
+    50,
+    0,
+    "A classic, probably don't give to the monkeys.",
+  ),
+  new Item(
+    "Coffee",
+    2500,
+    200,
+    0,
+    "Bout to go fast with this flavor town delight.",
+  ),
 ];
 
 let totalCount: number = 0;
@@ -91,7 +103,7 @@ availableItems.map((item) => {
   button.disabled = true;
   const display = document.createElement("div");
   const content = document.createElement("div");
-  
+
   button.classList.add("button");
   display.classList.add("display");
   content.classList.add("content");
@@ -111,11 +123,15 @@ availableItems.map((item) => {
   });
 });
 
-function updateItemDisplay(item: Item, button: HTMLButtonElement, display: HTMLElement) {
-    const costNum = item.cost.toFixed(2);
-    button.innerHTML = `Purchase ${item.name} for ${costNum}`;
-    display.innerHTML = `${item.amount} Gallons of ${item.name} Milk has been purchased.`;
-    checkPurchase(item, button);
+function updateItemDisplay(
+  item: Item,
+  button: HTMLButtonElement,
+  display: HTMLElement,
+) {
+  const costNum = item.cost.toFixed(2);
+  button.innerHTML = `Purchase ${item.name} for ${costNum}`;
+  display.innerHTML = `${item.amount} Gallons of ${item.name} Milk has been purchased.`;
+  checkPurchase(item, button);
 }
 
 function checkAllPurchases(items: Item[], buttons: HTMLButtonElement[]) {
@@ -125,13 +141,12 @@ function checkAllPurchases(items: Item[], buttons: HTMLButtonElement[]) {
 }
 
 function checkPurchase(item: Item, button: HTMLButtonElement) {
-    if (totalCount >= item.cost) {
-      button.disabled = false;
-    } else {
-      button.disabled = true;
-    }
+  if (totalCount >= item.cost) {
+    button.disabled = false;
+  } else {
+    button.disabled = true;
+  }
 }
-
 
 function updateDisplay() {
   const increaseNum = totalIncrease.toFixed(1);
