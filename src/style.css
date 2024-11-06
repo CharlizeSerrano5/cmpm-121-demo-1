@@ -37,7 +37,6 @@ h1 {
   line-height: 1.1;
   color: white;
   font-family: "DynaPuff", system-ui;
-
 }
 
 #app {
@@ -49,7 +48,7 @@ h1 {
   justify-content: center;
   text-align: center;
   font-family: "Gamja Flower", sans-serif;
-  font-weight: 700
+  font-weight: 700;
 }
 
 button {
@@ -90,9 +89,6 @@ button:focus-visible {
   background-color: white;
 }
 
-
-
-
 .growth-display {
   background-color: #f0fdfd;
   border: solid;
@@ -115,7 +111,15 @@ button:focus-visible {
 }
 
 .sign {
-  background-color: #a67640;
+  /* https://css-tricks.com/stripes-css/ */
+  /* background: repeating-linear-gradient(
+  90deg,
+  #cd9e6a,
+  #cd9e6a 10px,
+  #a67640 10px,
+  #a67640 20px */
+/* ); */
+  background-color: #cd9e6a;
   /* width: 80%; */
   border-radius: 20px;
   padding: 1em;
@@ -124,8 +128,7 @@ button:focus-visible {
 .container {
   background-color: white;
   padding: 1em;
-  margin: 1em; 
-
+  margin: 1em;
 }
 
 .shop {
@@ -143,15 +146,19 @@ button:focus-visible {
 }
 
 @keyframes bounce {
-  0%,20%,50%,80%,to {
-      transform: translateY(0)
+  0%,
+  20%,
+  50%,
+  80%,
+  to {
+    transform: translateY(0);
   }
 
   40% {
-      transform: translateY(-50px)
+    transform: translateY(-50px);
   }
 
   60% {
-      transform: translateY(-10px)
+    transform: translateY(-10px);
   }
 }

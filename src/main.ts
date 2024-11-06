@@ -24,12 +24,9 @@ const counterDisplay = document.createElement("div");
 const counter = document.createElement("div");
 counterDisplay.className = "counter";
 
-
 const counterHeader = document.createElement("h2");
 counterHeader.innerHTML = "You currently have: ";
 counterDisplay.appendChild(counterHeader);
-
-
 
 const button = document.createElement("button");
 button.className = "main-button";
@@ -63,17 +60,21 @@ app.append(button);
 app.append(shop);
 app.append(growthDisplay);
 
-button.addEventListener("click", (e) => {
-  // https://css-tricks.com/restart-css-animation/
-  // https://epaz0.github.io/cmpm-121-demo-1/
-  // referenced both website and peer code to add animations
-  e.preventDefault();
-  clickIncrease()
-  image.classList.remove("run-animation")
-  void image.offsetWidth;
+button.addEventListener(
+  "click",
+  (e) => {
+    // https://css-tricks.com/restart-css-animation/
+    // https://epaz0.github.io/cmpm-121-demo-1/
+    // referenced both website and peer code to add animations
+    e.preventDefault();
+    clickIncrease();
+    image.classList.remove("run-animation");
+    void image.offsetWidth;
 
-  image.classList.add('run-animation');  
-}, false);
+    image.classList.add("run-animation");
+  },
+  false,
+);
 const buttons: HTMLButtonElement[] = [];
 const displays: HTMLElement[] = [];
 
@@ -188,7 +189,7 @@ availableItems.map((item) => {
     updateCounter();
     updateDisplay();
     updateItemDisplay(item, button, display);
-    image.innerHTML = "🥄"+item.image;
+    image.innerHTML = "🥄" + item.image;
   });
 });
 
@@ -261,8 +262,8 @@ function increasePerSecond(newTime: number) {
 
 updateDisplay();
 
-
-const credit = document.createElement('div');
-credit.innerHTML = "Credit to https://epaz0.github.io/cmpm-121-demo-1/ for the cool bounce animation!";
+const credit = document.createElement("div");
+credit.innerHTML =
+  "Credit to https://epaz0.github.io/cmpm-121-demo-1/ for the cool bounce animation!";
 app.append(credit);
 updateCounter();
