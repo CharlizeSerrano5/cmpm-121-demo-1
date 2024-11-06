@@ -2,15 +2,15 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Ice Cream Stack!";
+const gameName = "Ice Cream Scooping!";
 document.title = gameName;
 
 const topSign = document.createElement("div");
-topSign.className = 'sign';
+topSign.className = "sign";
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 const subheader = document.createElement("h2");
-subheader.innerHTML = 'Create BIG ice cream :))';
+subheader.innerHTML = "Give that a BIG SCOOP of ice cream :))";
 topSign.appendChild(header);
 topSign.appendChild(subheader);
 app.append(topSign);
@@ -20,20 +20,35 @@ let totalIncrease: number = 0;
 let increaseNum = totalIncrease.toFixed(1);
 
 // statistics + top menu
+const counterDisplay = document.createElement("div");
 const counter = document.createElement("div");
-counter.className = 'counter';
+counterDisplay.className = "counter";
+
+
+const counterHeader = document.createElement("h2");
+counterHeader.innerHTML = "You currently have: ";
+counterDisplay.appendChild(counterHeader);
+
+
+
 const button = document.createElement("button");
-button.className = 'main-button';
+button.className = "main-button";
+const image = document.createElement("div");
+image.innerHTML = "🥄🍨";
+button.appendChild(image);
+
 const growthDisplay = document.createElement("div");
-growthDisplay.className = 'growth-display';
+growthDisplay.className = "growth-display";
 
 const growthHeader = document.createElement("h2");
 growthHeader.innerHTML = "Freeze Rate: ";
-const rate = document.createElement('h2');
-rate.className = 'rate';
+const rate = document.createElement("h2");
+rate.className = "rate";
 
 rate.innerHTML = `${increaseNum}`;
-const description = document.createTextNode("tea spoons of ice cream cooled per second");
+const description = document.createTextNode(
+  "tea spoons of ice cream cooled per second",
+);
 
 growthDisplay.appendChild(growthHeader);
 growthDisplay.appendChild(rate);
@@ -42,17 +57,25 @@ growthDisplay.appendChild(description);
 const shop = document.createElement("div");
 shop.className = "shop";
 
-app.append(growthDisplay);
-app.append(button);
+app.append(counterDisplay);
 app.append(counter);
+app.append(button);
 app.append(shop);
+app.append(growthDisplay);
 
-button.innerHTML = "🍨";
-button.addEventListener("click", clickIncrease);
+button.addEventListener("click", (e) => {
+  // https://css-tricks.com/restart-css-animation/
+  // https://epaz0.github.io/cmpm-121-demo-1/
+  // referenced both website and peer code to add animations
+  e.preventDefault();
+  clickIncrease()
+  image.classList.remove("run-animation")
+  void image.offsetWidth;
+
+  image.classList.add('run-animation');  
+}, false);
 const buttons: HTMLButtonElement[] = [];
 const displays: HTMLElement[] = [];
-
-
 
 class Item {
   name: string;
@@ -107,7 +130,14 @@ class Item {
 // 🥄
 const availableItems: Item[] = [
   new Item("Vanilla", "🍦", 10, 0.1, 0, "Pure, plain, simple vanilla."),
-  new Item("Strawberry", "🍓", 100, 2.0, 0, "A little bit more refreshing flavor."),
+  new Item(
+    "Strawberry",
+    "🍓",
+    100,
+    2.0,
+    0,
+    "A little bit more refreshing flavor.",
+  ),
   new Item("Banana", "🍌", 250, 15, 0, "Makes the monkeys go faster."),
   new Item(
     "Chocolate",
@@ -133,13 +163,14 @@ availableItems.map((item) => {
   // I now separate the button logic and store the displays inside of arrays
   // I used most of the recommendations that Brace offered but I changed where the logic is being used
   // I also did not use some of the functions it offered since they were unneccessary
-  const container = document.createElement('div');
-  container.className = 'container';
+  const container = document.createElement("div");
+  container.className = "container";
   const button = document.createElement("button");
   button.disabled = true;
   const display = document.createElement("div");
   const content = document.createElement("div");
-
+  // https://maozblan.github.io/cmpm-121-demo-1/
+  // I vaguely took inspiration from this person's code to organize the items to sell
   container.appendChild(button);
   container.appendChild(display);
   container.appendChild(content);
@@ -150,10 +181,6 @@ availableItems.map((item) => {
   updateItemDisplay(item, button, display);
   content.innerHTML = item.desc;
 
-  // app.append(button);
-  // app.append(content);
-  // app.append(display);
-
   shop.append(container);
 
   button.addEventListener("click", () => {
@@ -161,6 +188,7 @@ availableItems.map((item) => {
     updateCounter();
     updateDisplay();
     updateItemDisplay(item, button, display);
+    image.innerHTML = "🥄"+item.image;
   });
 });
 
@@ -190,7 +218,7 @@ function checkPurchase(item: Item, button: HTMLButtonElement) {
 
 function updateDisplay() {
   increaseNum = totalIncrease.toFixed(1);
-  rate.innerHTML = `${increaseNum}`;  
+  rate.innerHTML = `${increaseNum}`;
 }
 
 function updateCounter() {
@@ -232,3 +260,9 @@ function increasePerSecond(newTime: number) {
 }
 
 updateDisplay();
+
+
+const credit = document.createElement('div');
+credit.innerHTML = "Credit to https://epaz0.github.io/cmpm-121-demo-1/ for the cool bounce animation!";
+app.append(credit);
+updateCounter();

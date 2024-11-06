@@ -133,3 +133,25 @@ button:focus-visible {
   justify-content: space-around;
   max-width: 100%;
 }
+
+/* animation from */
+/* https://epaz0.github.io/cmpm-121-demo-1/  */
+.run-animation {
+  animation-duration: 1s;
+  animation-name: bounce;
+  animation-fill-mode: forwards;
+}
+
+@keyframes bounce {
+  0%,20%,50%,80%,to {
+      transform: translateY(0)
+  }
+
+  40% {
+      transform: translateY(-50px)
+  }
+
+  60% {
+      transform: translateY(-10px)
+  }
+}
