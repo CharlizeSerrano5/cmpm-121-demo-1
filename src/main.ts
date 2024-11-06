@@ -2,15 +2,61 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Ice Cream Shop!";
+const gameName = "Ice Cream Stack!";
 document.title = gameName;
 
+const topSign = document.createElement("div");
+topSign.className = 'sign';
 const header = document.createElement("h1");
 header.innerHTML = gameName;
-app.append(header);
+const subheader = document.createElement("h2");
+subheader.innerHTML = 'Create BIG ice cream :))';
+topSign.appendChild(header);
+topSign.appendChild(subheader);
+app.append(topSign);
+
+let totalCount: number = 0;
+let totalIncrease: number = 0;
+let increaseNum = totalIncrease.toFixed(1);
+
+// statistics + top menu
+const counter = document.createElement("div");
+counter.className = 'counter';
+const button = document.createElement("button");
+button.className = 'main-button';
+const growthDisplay = document.createElement("div");
+growthDisplay.className = 'growth-display';
+
+const growthHeader = document.createElement("h2");
+growthHeader.innerHTML = "Freeze Rate: ";
+const rate = document.createElement('h2');
+rate.className = 'rate';
+
+rate.innerHTML = `${increaseNum}`;
+const description = document.createTextNode("tea spoons of ice cream cooled per second");
+
+growthDisplay.appendChild(growthHeader);
+growthDisplay.appendChild(rate);
+growthDisplay.appendChild(description);
+
+const shop = document.createElement("div");
+shop.className = "shop";
+
+app.append(growthDisplay);
+app.append(button);
+app.append(counter);
+app.append(shop);
+
+button.innerHTML = "🍨";
+button.addEventListener("click", clickIncrease);
+const buttons: HTMLButtonElement[] = [];
+const displays: HTMLElement[] = [];
+
+
 
 class Item {
   name: string;
+  image: string;
   cost: number;
   rate: number;
   amount: number;
@@ -18,12 +64,14 @@ class Item {
 
   constructor(
     name: string,
+    image: string,
     cost: number,
     rate: number,
     amount: number,
     desc: string,
   ) {
     this.name = name;
+    this.image = image;
     this.cost = cost;
     this.rate = rate;
     this.amount = amount; // amount will be called
@@ -56,21 +104,14 @@ class Item {
     totalIncrease += this.rate;
   }
 }
-
-// create a button
-const counter = document.createElement("div");
-const button = document.createElement("button");
-const growthDisplay = document.createElement("div");
-app.append(growthDisplay);
-app.append(button);
-app.append(counter);
-
+// 🥄
 const availableItems: Item[] = [
-  new Item("Vanilla", 10, 0.1, 0, "Pure, plain, simple vanilla."),
-  new Item("Strawberry", 100, 2.0, 0, "A little bit more refreshing flavor."),
-  new Item("Banana", 250, 15, 0, "Makes the monkeys go faster."),
+  new Item("Vanilla", "🍦", 10, 0.1, 0, "Pure, plain, simple vanilla."),
+  new Item("Strawberry", "🍓", 100, 2.0, 0, "A little bit more refreshing flavor."),
+  new Item("Banana", "🍌", 250, 15, 0, "Makes the monkeys go faster."),
   new Item(
     "Chocolate",
+    "🍫",
     1000,
     50,
     0,
@@ -78,6 +119,7 @@ const availableItems: Item[] = [
   ),
   new Item(
     "Coffee",
+    "☕",
     2500,
     200,
     0,
@@ -85,26 +127,22 @@ const availableItems: Item[] = [
   ),
 ];
 
-let totalCount: number = 0;
-let totalIncrease: number = 0;
-button.innerHTML = "🍨";
-button.addEventListener("click", clickIncrease);
-const buttons: HTMLButtonElement[] = [];
-const displays: HTMLElement[] = [];
 availableItems.map((item) => {
   // https://chat.brace.tools/c/38fd3aec-616c-4736-9858-c7d59d586df8
   // I referenced a lot of Brace recommendations for cleaning up divergent code
   // I now separate the button logic and store the displays inside of arrays
   // I used most of the recommendations that Brace offered but I changed where the logic is being used
   // I also did not use some of the functions it offered since they were unneccessary
+  const container = document.createElement('div');
+  container.className = 'container';
   const button = document.createElement("button");
   button.disabled = true;
   const display = document.createElement("div");
   const content = document.createElement("div");
 
-  button.classList.add("button");
-  display.classList.add("display");
-  content.classList.add("content");
+  container.appendChild(button);
+  container.appendChild(display);
+  container.appendChild(content);
 
   buttons.push(button);
   displays.push(display);
@@ -112,9 +150,12 @@ availableItems.map((item) => {
   updateItemDisplay(item, button, display);
   content.innerHTML = item.desc;
 
-  app.append(button);
-  app.append(content);
-  app.append(display);
+  // app.append(button);
+  // app.append(content);
+  // app.append(display);
+
+  shop.append(container);
+
   button.addEventListener("click", () => {
     item.purchaseUpgrade();
     updateCounter();
@@ -148,8 +189,8 @@ function checkPurchase(item: Item, button: HTMLButtonElement) {
 }
 
 function updateDisplay() {
-  const increaseNum = totalIncrease.toFixed(1);
-  growthDisplay.innerHTML = `Freeze Rate: ${increaseNum} tea spoons of ice cream cooled per second`;
+  increaseNum = totalIncrease.toFixed(1);
+  rate.innerHTML = `${increaseNum}`;  
 }
 
 function updateCounter() {

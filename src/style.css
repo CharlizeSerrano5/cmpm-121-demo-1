@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #f8e9c0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,18 +29,27 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  color: brown;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: white;
+  font-family: "DynaPuff", system-ui;
+
 }
 
 #app {
-  max-width: 1280px;
+  width: 100%;
+  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 2rem;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  font-family: "Gamja Flower", sans-serif;
+  font-weight: 700
 }
 
 button {
@@ -50,7 +59,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: lightpink;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -73,4 +82,54 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.main-button {
+  font-size: 5em;
+  border-radius: 50rem;
+  background-color: white;
+}
+
+
+
+
+.growth-display {
+  background-color: #f0fdfd;
+  border: solid;
+  border-color: #c3ecec;
+  margin: 1em 20em;
+  border-radius: 20px;
+}
+
+.growth-display h2 {
+  color: #b0dada;
+  padding: 0;
+  margin: 0;
+}
+
+.growth-display .rate {
+  color: pink;
+  font-size: 40px;
+  /* padding: 0;
+  margin: 0; */
+}
+
+.sign {
+  background-color: #a67640;
+  /* width: 80%; */
+  border-radius: 20px;
+  padding: 1em;
+}
+
+.container {
+  background-color: white;
+  padding: 1em;
+  margin: 1em; 
+
+}
+
+.shop {
+  display: flex;
+  justify-content: space-around;
+  max-width: 100%;
 }
